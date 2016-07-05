@@ -19,7 +19,7 @@
 
   <groupId>io.beekeeper.ssllabs</groupId>
   <artifactId>ssllabs</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>SSLLabs (Parent)</name>
@@ -44,7 +44,7 @@
     <url>http://github.com/beekpr/ssllabs</url>
     <connection>scm:git:git://github.com/beekpr/ssllabs.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/beekpr/ssllabs.git</developerConnection>
-    <tag>ssllabs-1.0.1</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <issueManagement>
