@@ -14,8 +14,10 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 
 /**
- * Matcher for an {@link Endpoint} class. Verified that a given grade has a
- * minimum grade
+ * Matcher for an {@link Host} class.
+ * 
+ * Verifies that a host has endpoints which have grades which are at least of a
+ * given grade.
  */
 public class HostGradeMatcher extends BaseMatcher<Host> {
 
@@ -60,9 +62,9 @@ public class HostGradeMatcher extends BaseMatcher<Host> {
             List<Endpoint> endpoints = getFailingEndpoints((Host)item);
             List<String> out = new ArrayList<>();
             for (Endpoint e : endpoints) {
-                out.add(e.ipAddress + ":" + getEndpointGrade(e));
+                out.add("Endpoint " + e.ipAddress + " : " + getEndpointGrade(e));
             }
-            description.appendText("was ").appendValueList("[", ",", "]", out);
+            description.appendText("was ").appendValueList("[", ", ", "]", out);
         } else {
             throw new IllegalArgumentException("This matcher only applies to Host Objects");
         }
@@ -70,7 +72,7 @@ public class HostGradeMatcher extends BaseMatcher<Host> {
 
     @Override
     public void describeTo(Description description) {
-        description.appendText(" expected all host endpoint grades to be in ")
+        description.appendText("all host endpoint grades to be in ")
                    .appendValueList("[", ",", "]", acceptableGrades);
     }
 

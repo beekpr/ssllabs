@@ -16,19 +16,19 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 @RunWith(Parameterized.class)
-public class SSLBaseTest {
+public class BaseSSLLabsTest {
 
     private String hostname;
     private SSLLabsService service = new SSLLabsClient().getService();
 
     protected Matcher<Host> hostMatcher = new HostGradeMatcher("A");
 
-    public SSLBaseTest(String host) {
+    public BaseSSLLabsTest(String host) {
         this.hostname = host;
     }
 
     @Test
-    public void testHostSSL() throws Exception {
+    public void testSSLHost() throws Exception {
 
         Host host = startHostAnalysis();
         while (!Host.READY.equals(host.status) && !Host.ERROR.equals(host.status)) {
