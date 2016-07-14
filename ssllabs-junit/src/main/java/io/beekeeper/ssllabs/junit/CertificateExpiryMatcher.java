@@ -11,9 +11,9 @@ import io.beekeeper.ssllabs.api.dto.*;
  * Checks if the certificate expires in a given amount of time.
  * 
  * Usage: 
- * <code><pre>
+ * <pre><code>
  * CertificateExpiryMatcher.willNotExpireFor(Duration.ofDays(30))
- * </pre></code>
+ * </code></pre>
  */
 public class CertificateExpiryMatcher extends TypeSafeMatcher<Host> {
 
