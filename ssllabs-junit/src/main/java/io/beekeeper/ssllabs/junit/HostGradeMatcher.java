@@ -10,8 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
+import org.hamcrest.*;
 
 /**
  * Matcher for an {@link Host} class.
@@ -22,6 +21,18 @@ import org.hamcrest.Description;
 public class HostGradeMatcher extends BaseMatcher<Host> {
 
     private final static List<String> GRADES = Arrays.asList("A+", "A", "A-", "B", "C", "D", "E", "F");
+    
+    /** Checks if SSLLabs rating is at least <b>A</b> grade. */
+    public final static Matcher<Host> hasAtLeastGradeA = hasAtLeastGrade("A");
+    /** Checks if SSLLabs rating is the maxium <b>A+</b>. */
+    public final static Matcher<Host> hasAtLeastGradeAPlus = hasAtLeastGrade("A+");
+    
+    /**
+     * Checks if SSLLabs rating is at lease <tt>grade</tt>.
+     */
+	public static Matcher<Host> hasAtLeastGrade(String grade) {
+    	return new HostGradeMatcher(grade);
+    }
     
     private final Set<String> acceptableGrades = new HashSet<String>();
 
