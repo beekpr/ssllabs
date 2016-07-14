@@ -9,7 +9,7 @@ import io.beekeeper.ssllabs.api.dto.*;
 
 
 /**
- * Checks if the certificate expirce in a given amount of time.
+ * Checks if the certificate expires in a given amount of time.
  * 
  * Usage:
  * <code><pre>
@@ -18,13 +18,12 @@ import io.beekeeper.ssllabs.api.dto.*;
  */
 public class CertificateExpiryMatcher extends TypeSafeMatcher<Host> {
 	
-	
 	private final Duration timeLeft;
 	
+	/** Checks if the certificate will expire in <tt>timeLeft</tt> time. */
 	public static Matcher<Host> willNotExpireFor(final Duration timeLeft) {
 		return new CertificateExpiryMatcher(timeLeft);
 	}
-	
 	
 	private CertificateExpiryMatcher(final Duration timeLeft) {
 		this.timeLeft = timeLeft;
@@ -39,7 +38,25 @@ public class CertificateExpiryMatcher extends TypeSafeMatcher<Host> {
 	public void describeTo(Description description) {
 		description.appendText(" the certificate should expire after " + Instant.now().plus(timeLeft).toString());
 	}
+	
+	@Override
+	protected boolean matchesSafely(Host host) {
+		final List<ExpiredCertifice> expiredCertificates = checkExpiryOfCertificatesOn(host);
+		return expiredCertificates.isEmpty();
+	}
 
+	private List<ExpiredCertifice> checkExpiryOfCertificatesOn(Host host) {
+		final List<ExpiredCertifice> mismatches = new ArrayList<>(); 
+		for (Endpoint endpoint : host.endpoints) {
+			final long expiry = endpoint.details.cert.notAfter;
+			final long expectedMinExpiry = Instant.now().plus(timeLeft).toEpochMilli();
+			
+			if (expectedMinExpiry > expiry) {
+				mismatches.add(new ExpiredCertifice(endpoint.serverName + "(" + host.host + ")", expiry));
+			}
+		}
+		return mismatches;
+	}
 
 	private static class ExpiredCertifice {
 		
@@ -58,28 +75,5 @@ public class CertificateExpiryMatcher extends TypeSafeMatcher<Host> {
 		}
 		
 	}
-	
-	@Override
-	protected boolean matchesSafely(Host host) {
-		final List<ExpiredCertifice> expiredCertificates = checkExpiryOfCertificatesOn(host);
-		return expiredCertificates.isEmpty();
-	}
-
-
-	private List<ExpiredCertifice> checkExpiryOfCertificatesOn(Host host) {
-		final List<ExpiredCertifice> mismatches = new ArrayList<>(); 
-		for (Endpoint endpoint : host.endpoints) {
-			final long expiry = endpoint.details.cert.notAfter;
-			final long expectedMinExpiry = Instant.now().plus(timeLeft).toEpochMilli();
-			
-			if (expectedMinExpiry > expiry) {
-				mismatches.add(new ExpiredCertifice(endpoint.serverName + "(" + host.host + ")", expiry));
-			}
-		}
-		return mismatches;
-	}
-	
-	
-	
 
 }
