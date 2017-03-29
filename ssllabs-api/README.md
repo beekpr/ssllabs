@@ -40,7 +40,7 @@ repositories {
 }
 
 dependencies {
-    compile 'io.beekeeper.ssllabs:ssllabs-api:1.0.1'
+    compile 'io.beekeeper.ssllabs:ssllabs-api:1.0.3'
 }
 ```
 
