@@ -10,8 +10,7 @@ Include the following dependency in your `pom.xml`
 <dependency>
   <groupId>io.beekeeper.ssllabs</groupId>
   <artifactId>ssllabs-api</artifactId>
-  <version>1.0.1</version>
-  <type>pom</type>
+  <version>1.0.3</version>
 </dependency>
 ```
 Please make sure that you add the `http://dl.bintray.com/beekeeper/maven` maven repository.
@@ -25,7 +24,7 @@ repositories { maven { url "http://dl.bintray.com/beekeeper/maven" } }
 and
 
 ```
-compile 'io.beekeeper.ssllabs:ssllabs-api:1.0.1'
+compile 'io.beekeeper.ssllabs:ssllabs-api:1.0.3'
 ```
 
 into the dependencies section of the `build.gradle` file.
